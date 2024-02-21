@@ -25,10 +25,17 @@ fi
 # convert -size 1920x600 xc:black black_background.jpg
 
 # Crop the input image to 1920x600
-magick "$input_image" -resize 1920x600 -gravity center -alpha set -channel A -evaluate set 50% cropped_input.jpg
+magick "$input_image" -resize 1920x600 -gravity center cropped_input.jpg
+
+magick "$input_image" -alpha set -channel A -evaluate set 50% cropped_input.jpg
+
+magick "$input_image" -brightness-contrast -30x0 cropped_input.jpg
+
+
+
 
 # Crop the background image to 1920x600
-magick "$background_image" -resize 1920x600! -gravity center background_image.jpg
+magick "$background_image" -resize 1920x600! -gravity north background_image.jpg
 
 # Paste the cropped input image onto the background image, centered
 composite -gravity center cropped_input.jpg background_image.jpg final_output.jpg
